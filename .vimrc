@@ -9,3 +9,4 @@ if has('autocmd')
     filetype plugin indent on
 endif
 set pastetoggle=<F3>
+autocmd FileType .py set keywordprg=py-doc
