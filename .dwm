@@ -35,14 +35,11 @@ function getWiFi(){
     connected="$(nmcli c | grep wlan0 | wc -l)"
     if [ $up = "down" ]; then
         echo "wlan0:"
-    elif [ $connected -gt 0 ]; then
+    else
         connected="$(nmcli c |grep "wlan0" |awk '{printf("%s",$1)}')"
         signal="$(iw dev wlan0 link | grep signal | awk '{$abs=$2*-1; printf("%s",$abs)}')"
-    else
-       connected=''
-       signal=''
+        echo "wlan0:$connected sig:$signal"
    fi
-   echo "wlan0:$connected sig:$signal"
 }
 
 while :; do
