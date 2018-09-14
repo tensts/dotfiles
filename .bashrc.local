@@ -7,3 +7,5 @@ alias dockmonitor="xrandr --output VGA-1 --auto --left-of LVDS-1"
 readmd() {
     pandoc -f markdown -t html $1 | lynx -stdin
 }
+
+export EDITOR=vim
