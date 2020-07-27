@@ -2,10 +2,13 @@
 MANPAGER="/bin/sh -c \"col -b | vim --not-a-term -c 'set ft=man ts=8 nomod nolist noma' -\""
 
 alias usd2pln="wget -q -O- http://api.nbp.pl/api/exchangerates/rates/a/usd/ | cat -ve | grep -Po '\"mid\":([0-9]*[.]?[0-9]*)'"
-alias dockmonitor="xrandr --output VGA-1 --auto --left-of LVDS-1"
 
 readmd() {
     pandoc -f markdown -t html $1 | lynx -stdin
 }
 
 export EDITOR=vim
+
+#colorize commands
+export LESS="--RAW-CONTROL-CHARS"
+[[ -f ~/.config/less/termcap ]] && . ~/.config/less/termcap
