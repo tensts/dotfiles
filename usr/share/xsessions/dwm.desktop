@@ -2,6 +2,6 @@
 Encoding=UTF-8
 Name=Dwm
 Comment=Dynamic window manager
-Exec=/home/krystian/.xsession
+Exec=$HOME/.xsession
 Icon=dwm
 Type=XSession
