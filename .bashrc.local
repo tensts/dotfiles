@@ -25,7 +25,7 @@ dockmonitor() {
     xrandr --auto
     xrandr --output HDMI-2 --left-of LVDS-1
     xrandr --output VGA-1 --left-of HDMI-2
-    feh --bg-scale /home/krystian/Pictures/133151.jpg
+    feh --bg-scale $HOME/Pictures/133151.jpg
 }
 
 
