@@ -1,13 +1,16 @@
 #!/bin/bash
 
 # script made for dwm status bar
+WLAN_NAME=wlp58s0
+ETH_NAME=enp0s31f6
+
 
 function batteryStatus() {
-     batpath=/sys/class/power_supply/BAT0
+     batpath=/sys/class/power_supply/BAT1
      discharging=$(grep -qi "discharging" $batpath/status && echo "" || echo "chrg.") 
      bat_capacity=$batpath/capacity
-     bat_energy_full=$batpath/charge_full
-     bat_energy_now=$batpath/charge_now
+     bat_energy_full=$batpath/energy_full
+     bat_energy_now=$batpath/energy_now
      charge="$(cat $bat_capacity) / 100"
      
      echo "BAT:$((($(cat $bat_energy_now)*100) / $(cat $bat_energy_full)))%$discharging"
@@ -22,22 +25,22 @@ function diskUsage(){
 }
 
 function getEthStatus() {
-    up="$(cat /sys/class/net/eth0/operstate)"
+    up="$(cat /sys/class/net/$ETH_NAME/operstate)"
     if [ $up = "down" ]; then
         echo 'eth0:'
     else
-        echo "eth0:$(ip address show dev eth0 | grep -P '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d' | awk '{printf("%s",$2)}')"
+        echo "eth0:$(ip address show dev $ETH_NAME | grep -P '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d' | awk '{printf("%s",$2)}')"
     fi
 }
 
 function getWiFi(){
-    up="$(cat /sys/class/net/wlan0/operstate)"
-    connected="$(nmcli c | grep wlan0 | wc -l)"
+    up="$(cat /sys/class/net/$WLAN_NAME/operstate)"
+    connected="$(nmcli c | grep $WLAN_NAME | wc -l)"
     if [ $up = "down" ]; then
         echo "wlan0:"
     else
-        connected="$(nmcli c |grep "wlan0" |awk '{printf("%s",$1)}')"
-        signal="$(iw dev wlan0 link | grep signal | awk '{$abs=$2*-1; printf("%s",$abs)}')"
+        connected="$(nmcli c |grep "$WLAN_NAME" |awk '{printf("%s",$1)}')"
+        signal="$(iw dev $WLAN_NAME link | grep signal | awk '{$abs=$2*-1; printf("%s",$abs)}')"
         echo "wlan0:$connected sig:$signal"
    fi
 }
