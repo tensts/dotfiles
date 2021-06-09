@@ -51,3 +51,7 @@ export GPG_TTY=$(tty)
 
 gpg-connect-agent updatestartuptty /bye
 
+agent=$(ps -ef | grep "ssh-agent" | grep -v "grep" | wc -l)
+if [ $agent -eq 0 ]; then
+    eval $(ssh-agent -s)
+fi
