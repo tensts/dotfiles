@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # script made for dwm status bar
-WLAN_NAME=wlp58s0
-ETH_NAME=enp0s31f6
-
+WLAN_NAME=wlan0
+ETH_NAME=eth0
+BATPATH=/sys/class/power_supply/BAT0
 
 function batteryStatus() {
-     batpath=/sys/class/power_supply/BAT1
+     batpath=$BATPATH
      discharging=$(grep -qi "discharging" $batpath/status && echo "" || echo "chrg.") 
      bat_capacity=$batpath/capacity
-     bat_energy_full=$batpath/energy_full
-     bat_energy_now=$batpath/energy_now
+     bat_energy_full=$batpath/charge_full
+     bat_energy_now=$batpath/charge_now
      charge="$(cat $bat_capacity) / 100"
      
      echo "BAT:$((($(cat $bat_energy_now)*100) / $(cat $bat_energy_full)))%$discharging"
