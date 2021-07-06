@@ -5,15 +5,18 @@ WLAN_NAME=wlan0
 ETH_NAME=eth0
 BATPATH=/sys/class/power_supply/BAT0
 
+#override above global variables
+if [ -e .dwm.local ]; then
+    source .dwm.local
+fi
+
 function batteryStatus() {
      batpath=$BATPATH
      discharging=$(grep -qi "discharging" $batpath/status && echo "" || echo "chrg.") 
      bat_capacity=$batpath/capacity
-     bat_energy_full=$batpath/charge_full
-     bat_energy_now=$batpath/charge_now
-     charge="$(cat $bat_capacity) / 100"
+     charge="$(cat $bat_capacity)"
      
-     echo "BAT:$((($(cat $bat_energy_now)*100) / $(cat $bat_energy_full)))%$discharging"
+     echo "BAT:$charge%$discharging"
 }
 
 function getDate(){
