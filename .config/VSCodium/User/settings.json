@@ -3,5 +3,13 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "files.associations": { "*.module": "php" }
+  "files.associations": {
+    "*.module": "php"
+  },
+  "sshfs.configs": [],
+  "php.suggest.basic": false,
+  "[python]": {
+  
+  },
+  "redhat.telemetry.enabled": false
 }
