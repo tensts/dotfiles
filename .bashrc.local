@@ -1,6 +1,3 @@
-GIT_PROMPT_ONLY_IN_REPO=1
-source /opt/bash-git-prompt/gitprompt.sh
-
 #my local aliases
 MANPAGER="/bin/sh -c \"col -b | vim --not-a-term -c 'set ft=man ts=8 nomod nolist noma' -\""
 
@@ -24,8 +21,8 @@ alias lock="xscreensaver-command -lock"
 
 dockmonitor() {
     xrandr --auto
-    xrandr --output HDMI-2 --left-of LVDS-1
-    xrandr --output VGA-1 --left-of HDMI-2
+#    xrandr --output HDMI-2 --left-of LVDS-1
+    xrandr --output DP-1 --right-of eDP-1
     feh --bg-scale $HOME/Pictures/133151.jpg
 }
 
@@ -55,4 +52,9 @@ gpg-connect-agent updatestartuptty /bye
 agent=$(ps -ef | grep "ssh-agent" | grep -v "grep" | wc -l)
 if [ $agent -eq 0 ]; then
     eval $(ssh-agent -s)
+fi
+
+if [ -f "$HOME/Git/bash-git-prompt/gitprompt.sh" ]; then
+    GIT_PROMPT_ONLY_IN_REPO=1
+    source $HOME/Git/bash-git-prompt/gitprompt.sh
 fi
