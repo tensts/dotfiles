@@ -3,6 +3,7 @@ MANPAGER="/bin/sh -c \"col -b | vim --not-a-term -c 'set ft=man ts=8 nomod nolis
 
 alias usd2pln="wget -q -O- http://api.nbp.pl/api/exchangerates/rates/a/usd/ | cat -ve | grep -Po '\"mid\":([0-9]*[.]?[0-9]*)'"
 alias euro2pln="wget -q -O- http://api.nbp.pl/api/exchangerates/rates/a/eur/ | cat -ve | grep -Po '\"mid\":([0-9]*[.]?[0-9]*)'"
+alias onedrive="onedrive --monitor --confdir ~/.config/onedrive --resync"
 
 readmd() {
     pandoc -f markdown -t html $1 | lynx -stdin
@@ -28,7 +29,7 @@ dockmonitor() {
 
 
 #tmux by default
-if [[ $TERM = "xterm" ]] || [[ $TERM = "xterm-256color" ]]; then
+if [[ $TERM = "xterm" ]] || [[ $TERM = "xterm-256color" ]] || [[ $TERM = "st-256color" ]]; then
     tmux && exit 0;
 fi
 
@@ -56,5 +57,7 @@ fi
 
 if [ -f "$HOME/Git/bash-git-prompt/gitprompt.sh" ]; then
     GIT_PROMPT_ONLY_IN_REPO=1
+    #disable autopull from remote (fail2ban avoid)
+    GIT_PROMPT_FETCH_REMOTE_STATUS=0
     source $HOME/Git/bash-git-prompt/gitprompt.sh
 fi
