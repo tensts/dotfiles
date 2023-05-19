@@ -7,9 +7,10 @@
     "*.module": "php"
   },
   "sshfs.configs": [],
-  "php.suggest.basic": false,
   "[python]": {
   
   },
-  "redhat.telemetry.enabled": false
+  "redhat.telemetry.enabled": false,
+  "workbench.statusBar.visible": false,
+  "php.validate.executablePath": "/usr/bin/php"
 }

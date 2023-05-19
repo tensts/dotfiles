@@ -1,2 +1,4 @@
 not4github/
 *.swp
+.config/VSCodium
+!.config/VSCodium/User/
