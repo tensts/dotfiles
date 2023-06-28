@@ -11,6 +11,5 @@
   
   },
   "redhat.telemetry.enabled": false,
-  "workbench.statusBar.visible": false,
   "php.validate.executablePath": "/usr/bin/php"
 }
