@@ -1,13 +1,13 @@
 #my local aliases
 MANPAGER="/bin/sh -c \"col -b | vim --not-a-term -c 'set ft=man ts=8 nomod nolist noma' -\""
 
-alias usd2pln="wget -q -O- http://api.nbp.pl/api/exchangerates/rates/a/usd/ | cat -ve | grep -Po '\"mid\":([0-9]*[.]?[0-9]*)'"
-alias euro2pln="wget -q -O- http://api.nbp.pl/api/exchangerates/rates/a/eur/ | cat -ve | grep -Po '\"mid\":([0-9]*[.]?[0-9]*)'"
-alias onedrive="onedrive --monitor --confdir ~/.config/onedrive --resync"
-
 readmd() {
     pandoc -f markdown -t html $1 | lynx -stdin
 }
+alias usd2pln="wget -q -O- http://api.nbp.pl/api/exchangerates/rates/a/usd/ | cat -ve | grep -Po '\"mid\":([0-9]*[.]?[0-9]*)'"
+alias euro2pln="wget -q -O- http://api.nbp.pl/api/exchangerates/rates/a/eur/ | cat -ve | grep -Po '\"mid\":([0-9]*[.]?[0-9]*)'"
+alias onedrive="onedrive --monitor --confdir ~/.config/onedrive --resync"
+alias mdread="readmd $1"
 
 export EDITOR=vim
 
