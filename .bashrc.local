@@ -1,32 +1,33 @@
-#my local aliases
+HISTIGNORE=":task add*"
 MANPAGER="/bin/sh -c \"col -b | vim --not-a-term -c 'set ft=man ts=8 nomod nolist noma' -\""
 
-readmd() {
-    pandoc -f markdown -t html $1 | lynx -stdin
-}
+export EDITOR=vim
+
 alias usd2pln="wget -q -O- http://api.nbp.pl/api/exchangerates/rates/a/usd/ | cat -ve | grep -Po '\"mid\":([0-9]*[.]?[0-9]*)'"
 alias euro2pln="wget -q -O- http://api.nbp.pl/api/exchangerates/rates/a/eur/ | cat -ve | grep -Po '\"mid\":([0-9]*[.]?[0-9]*)'"
 alias onedrive="onedrive --monitor --confdir ~/.config/onedrive --resync"
 alias mdread="readmd $1"
+alias spotkill="pkill -9 spotify"
+alias kpcli='kpcli --histfile /dev/null' 
+alias lock="xscreensaver-command -lock"
 
-export EDITOR=vim
+
+readmd() {
+    pandoc -f markdown -t html $1 | lynx -stdin
+}
+
+dockmonitor() {
+#    xrandr --auto
+    xrandr --output HDMI-1 --right-of eDP-1
+    xrandr --output DP-2 --right-of eDP-1
+#    xrandr --output DP-1 --right-of eDP-1
+    feh --bg-scale $HOME/Pictures/wallpaper.jpg
+}
+
 
 #colorize commands
 export LESS="--RAW-CONTROL-CHARS"
 [[ -f ~/.config/less/termcap ]] && . ~/.config/less/termcap
-
-alias kpcli='kpcli --histfile /dev/null' 
-
-
-alias lock="xscreensaver-command -lock"
-
-dockmonitor() {
-    xrandr --auto
-#    xrandr --output HDMI-2 --left-of LVDS-1
-    xrandr --output DP-1 --right-of eDP-1
-    feh --bg-scale $HOME/Pictures/133151.jpg
-}
-
 
 #tmux by default
 if [[ $TERM = "xterm" ]] || [[ $TERM = "xterm-256color" ]] || [[ $TERM = "st-256color" ]]; then
@@ -37,16 +38,27 @@ if [[ -e ~/.bashrc-functs ]]; then
     source ~/.bashrc-functs
 fi
 
+# ssh agent setup
+ssh_agent_path="/run/user/$UID/agent.$PPID"
+if [[ -e $ssh_agent_path ]]; then
+    ssh-agent -k
+    rm -f $ssh_agent_path
+fi
+eval `ssh-agent -a $ssh_agent_path -t 600` #-t 600[s]
+
 #setting up gpg
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+# uncomment if gpg should be use as ssh (above block about ssh-agent should be commented out
+# to use this settings
+#export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+export GPG_TTY=$(tty)
 
 if test -f $HOME/.gpg-agent-info && \
-    kill -0 `ps aux | grep gpg-agent` 2>/dev/null; then
+    kill -0 `ps aux | grep gpg-agent` 2>/dev/null;
+then
     eval `cat $HOME/.gpg-agent-info`
 else
     eval `gpg-agent --homedir $HOME/.gnupg --daemon --enable-ssh-support -s > $HOME/.gpg-agent-info`
 fi
-export GPG_TTY=$(tty)
 
 gpg-connect-agent updatestartuptty /bye
 
@@ -54,6 +66,7 @@ agent=$(ps -ef | grep "ssh-agent" | grep -v "grep" | wc -l)
 if [ $agent -eq 0 ]; then
     eval $(ssh-agent -s)
 fi
+
 
 if [ -f "$HOME/Git/bash-git-prompt/gitprompt.sh" ]; then
     GIT_PROMPT_ONLY_IN_REPO=1

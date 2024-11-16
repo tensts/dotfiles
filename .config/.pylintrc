@@ -1,0 +1,9 @@
+[MASTER]
+disable=
+    C0114, #missing module docsting
+    C0115, #missing class docstring
+    C0116, #missing function docstring
+    W1514, #utf-8 not set with open()
+    W1203, #(micro optimalization) dont use [fstring-interpolation](https://pylint.readthedocs.io/en/latest/user_guide/messages/warning/logging-fstring-interpolation.html)
+    W0718, #to wide exception catch (`except Exception`)
+    W0221, #function args number not equal to function interface args number
