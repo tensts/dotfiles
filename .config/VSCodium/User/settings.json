@@ -8,8 +8,12 @@
   },
   "sshfs.configs": [],
   "[python]": {
-  
+  "editor.tabCompletion": "on",
+    "editor.defaultFormatter": "ms-python.autopep8",
+    "editor.formatOnSave": true
   },
   "redhat.telemetry.enabled": false,
-  "php.validate.executablePath": "/usr/bin/php"
+  "php.validate.executablePath": "/usr/bin/php",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "python.languageServer": "Jedi"
 }

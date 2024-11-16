@@ -24,7 +24,7 @@ function getDate(){
 }
 
 function diskUsage(){
-    df -hT | grep -v tmpfs|grep /| awk '{printf(" %s %s(%s)", $7,$5,$6)}'
+    df -hT | grep -v tmpfs|grep -v efivars|grep -v boot|grep /| awk '{printf(" %s %s(%s)", $7,$5,$6)}'
 }
 
 function getEthStatus() {

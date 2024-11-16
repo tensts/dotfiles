@@ -1,4 +1,4 @@
-color delek
+color desert
 filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
@@ -9,4 +9,4 @@ if has('autocmd')
     filetype plugin indent on
 endif
 set pastetoggle=<F3>
-autocmd FileType .py set keywordprg=py-doc
+autocmd FileType .py set keywordprg=pydoc
