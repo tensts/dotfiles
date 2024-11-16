@@ -40,11 +40,9 @@ fi
 
 # ssh agent setup
 ssh_agent_path="/run/user/$UID/agent.$PPID"
-if [[ -e $ssh_agent_path ]]; then
-    ssh-agent -k
-    rm -f $ssh_agent_path
+if [[ ! -e $ssh_agent_path ]]; then
+    eval $(ssh-agent -s -a $ssh_agent_path -t 600) #-t 600[s]
 fi
-eval `ssh-agent -a $ssh_agent_path -t 600` #-t 600[s]
 
 #setting up gpg
 # uncomment if gpg should be use as ssh (above block about ssh-agent should be commented out
@@ -61,11 +59,6 @@ else
 fi
 
 gpg-connect-agent updatestartuptty /bye
-
-agent=$(ps -ef | grep "ssh-agent" | grep -v "grep" | wc -l)
-if [ $agent -eq 0 ]; then
-    eval $(ssh-agent -s)
-fi
 
 
 if [ -f "$HOME/Git/bash-git-prompt/gitprompt.sh" ]; then
