@@ -10,3 +10,11 @@ if has('autocmd')
 endif
 set pastetoggle=<F3>
 autocmd FileType .py set keywordprg=pydoc
+set ignorecase " search incase-senistive
+
+
+try
+  source ~/.vimrc-functs
+catch
+  " file not exists, ignoring
+endtry
