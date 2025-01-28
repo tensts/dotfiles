@@ -1,0 +1,38 @@
+" Renders markdownw files in glow inside accual window
+function! GlowMarkdown()
+    let current_line = line('.') " save current line number
+
+    let vimrc_glow_path = get(g:, 'glow_path', '')
+    let default_glow_path = '/snap/bin/glow'
+    let glow_path = ''
+
+    " searching for glow bin path
+    if filereadable(vimrc_glow_path) && vimrc_glow_path != ''
+        let glow_path = vimrc_glow_path
+    elseif executable('glow')
+    " if path variable is not declarated we check $PATH env var
+        let glow_path = 'glow'
+    elseif filereadable(default_glow_path)
+    " last chanse - the hardcoded system path
+        let glow_path = default_glow_path
+    else
+        " glow doesnt exist or path is incorrect
+        echoerr "glow bin doesnt exists, or glow path is wrong, \n Set correct path to glow as .vimrc var
+        return
+    endif
+
+    let tmp_file = '.' . expand('%:t:r') . '.md'
+    let glow_exec = glow_path . ' -p ' . tmp_file
+
+    " read edited file content and save to tmp
+    let file_content = getline(1, '$')
+    call writefile(file_content, tmp_file)
+
+    execute 'silent !' . glow_exec
+
+    call delete(tmp_file)
+    call cursor(current_line, 1) " back to edited line
+    redraw!
+endfunction
+
+nnoremap <silent> <F5> :call GlowMarkdown()<CR>
