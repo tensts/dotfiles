@@ -15,5 +15,8 @@
   "redhat.telemetry.enabled": false,
   "php.validate.executablePath": "/usr/bin/php",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "python.languageServer": "Jedi"
+  "python.languageServer": "Jedi",
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
 }
