@@ -11,20 +11,20 @@ if [ -e .dwm.local ]; then
 fi
 
 function batteryStatus() {
-     batpath=$BATPATH
-     discharging=$(grep -qi "discharging" $batpath/status && echo "" || echo "chrg.") 
-     bat_capacity=$batpath/capacity
-     charge="$(cat $bat_capacity)"
-     
-     echo "BAT:$charge%$discharging"
+    batpath=$BATPATH
+    discharging=$(grep -qi "discharging" $batpath/status && echo "" || echo "chrg.")
+    bat_capacity=$batpath/capacity
+    charge="$(cat $bat_capacity)"
+
+    echo "BAT:$charge%$discharging"
 }
 
-function getDate(){
+function getDate() {
     date '+%a %D %T'
 }
 
-function diskUsage(){
-    df -hT | grep -v tmpfs|grep -v efivars|grep -v boot|grep /| awk '{printf(" %s %s(%s)", $7,$5,$6)}'
+function diskUsage() {
+    df -hT | grep -v tmpfs | grep -v efivars | grep -v boot | grep / | awk '{printf(" %s %s(%s)", $7,$5,$6)}'
 }
 
 function getEthStatus() {
@@ -36,16 +36,16 @@ function getEthStatus() {
     fi
 }
 
-function getWiFi(){
+function getWiFi() {
     up="$(cat /sys/class/net/$WLAN_NAME/operstate)"
     connected="$(nmcli c | grep $WLAN_NAME | wc -l)"
     if [ "$up" = "down" ]; then
         echo "wlan0:"
     else
-        connected="$(nmcli c |grep "$WLAN_NAME" |awk '{printf("%s",$1)}')"
+        connected="$(nmcli c | grep "$WLAN_NAME" | awk '{printf("%s",$1)}')"
         signal="$(iw dev $WLAN_NAME link | grep signal | awk '{$abs=$2*-1; printf("%s",$abs)}')"
         echo "wlan0:$connected sig:$signal"
-   fi
+    fi
 }
 
 while :; do
