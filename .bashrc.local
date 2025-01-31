@@ -65,9 +65,9 @@ else
     export SSH_AUTH_SOCK=$ssh_agent_path
 fi
 
-if [ -f "$HOME/Git/bash-git-prompt/gitprompt.sh" ]; then
+if [ -f "$HOME/Src/bash-git-prompt/gitprompt.sh" ]; then
     export GIT_PROMPT_ONLY_IN_REPO=1
     #disable autopull from remote (fail2ban avoid)
     export GIT_PROMPT_FETCH_REMOTE_STATUS=0
-    source "$HOME/Git/bash-git-prompt/gitprompt.sh"
+    source "$HOME/Src/bash-git-prompt/gitprompt.sh"
 fi
